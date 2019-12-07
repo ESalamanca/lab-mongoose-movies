@@ -41,6 +41,34 @@ router.post('/:celebrity_id/delete', (req,res,next)=>{
   });
 });
 
+router.get('/:celebrity_id/edit', (req,res,next)=>{
+  Celebrity.findById(req.params.celebrity_id).then(celebrity=>{
+    res.render('celebrities/edit', {
+      celebrity:celebrity
+    });
+
+  }).catch(err=>{
+    console.error(err);
+    next(err);
+  });
+});
+
+router.post('/:celebrity_id', (req,res,next)=>{
+  const {name, occupation, catchPhrase}=req.body; 
+  
+  Celebrity.updateOne({_id:req.params.celebrity_id}, {$set:{
+    name:name,
+    occupation:occupation,
+    catchPhrase : catchPhrase
+  }}).then(()=>{
+    res.redirect('/celebrities');
+  }).catch(err=>{
+    console.error(err);
+    next(err);
+  });
+
+});
+
 router.get('/:celebrity_id', (req,res,next)=>{
   Celebrity.findById(req.params.celebrity_id).then(celebrity=>{
 
