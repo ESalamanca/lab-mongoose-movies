@@ -1,0 +1,10 @@
+<h2>Movie details</h2>
+<h3><span>Title of the Movie :</span> {{movie.title}}</h3>
+<p><span>Genre :</span> {{movie.genre}}</p>
+<p><span>Plot :</span> {{movie.plot}}</p>
+<p><span>Casting : </span></p>
+<ul>
+ {{#each movie.cast}}
+  <li><a href="/celebrities/{{this._id}}">{{this.name}}</a></li>
+ {{/each}}
+</ul>

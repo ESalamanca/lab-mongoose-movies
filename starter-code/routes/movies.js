@@ -35,4 +35,16 @@ router.get('/', (req,res,next)=>{
   });
 });
 
+router.get('/:movie_id', (req,res,next)=>{
+  Movie.findById(req.params.movie_id)
+    .populate('cast')
+    .then(movie=>{
+      res.render('movies/show',{movie});
+    })
+    .catch(err=>{
+      console.error(err);
+      next(err);
+    });
+});
+
 module.exports=router; 
