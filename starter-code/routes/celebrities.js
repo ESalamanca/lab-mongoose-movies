@@ -15,6 +15,23 @@ router.get('/', (req, res, next) => {
   })  
 });
 
+router.post("/", (req,res,next)=>{
+ // Creates a new celebrity and saves it in database Celebrities collection
+ const {name, occupation, catchPhrase} = req.body; 
+ Celebrity.create({name,occupation,catchPhrase}).then(celebrity=>{
+  res.redirect('/celebrities');
+
+ }).catch(err=>{
+   console.error(err);
+   res.render('celebrities/new');
+ });
+});
+
+router.get('/new', (req,res,next)=>{
+  res.render('celebrities/new');
+
+});
+
 router.get('/:celebrity_id', (req,res,next)=>{
   Celebrity.findById(req.params.celebrity_id).then(celebrity=>{
 
@@ -25,6 +42,8 @@ router.get('/:celebrity_id', (req,res,next)=>{
     next(err);
   })
   
-})
+});
+
+
 
 module.exports = router;
