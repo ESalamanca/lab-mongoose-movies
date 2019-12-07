@@ -35,6 +35,15 @@ router.get('/', (req,res,next)=>{
   });
 });
 
+router.post('/:movie_id/delete', (req,res,next)=>{
+  Movie.findByIdAndDelete(req.params.movie_id).then(()=>{
+    res.redirect('/movies');
+  }).catch(err=>{
+    console.error(err);
+    next(err);
+  })
+});
+
 router.get('/:movie_id', (req,res,next)=>{
   Movie.findById(req.params.movie_id)
     .populate('cast')
