@@ -17,6 +17,22 @@ router.get('/new', (req,res,next)=>{
 
 router.post('/', (req,res,next)=>{
   const { title, genre, plot, cast }= req.body; 
-})
+  Movie.create({title,genre,plot,cast})
+  .then(()=>{
+    res.redirect('/movies');
+  }).catch(err=>{
+    console.error(err);
+    next(err);
+  })
+});
+
+router.get('/', (req,res,next)=>{
+  Movie.find({},null,{sort:{name:1}}).then(movies=>{
+    res.render('movies/index', {movies});
+  }).catch(err=>{
+    console.error(err);
+    next(err);
+  });
+});
 
 module.exports=router; 
